@@ -1,0 +1,36 @@
+
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cart — AM Carpentry</title>
+<link rel="stylesheet" href="/css/style.css">
+</head><body>
+<header class="header"><nav class="nav"><a class="brand" href="/">AM Carpentry</a><a class="menu" href="/materials.html">Materials</a></nav></header>
+<div class="center" style="padding:16px;">
+  <h2>Cart</h2>
+  <table id="t"></table>
+  <div style="margin-top:14px; display:flex; gap:10px;">
+    <button class="btn" id="pay">Checkout (Stripe)</button>
+    <button class="btn ghost" id="clr">Clear</button>
+  </div>
+</div>
+<script>
+function render(){
+  const t=document.getElementById('t'); const cart=JSON.parse(localStorage.getItem('cart')||'[]');
+  if(cart.length===0){t.innerHTML='<tr><td><small class="muted">Cart is empty</small></td></tr>';return;}
+  let s='<tr><th>Item</th><th>Qty</th><th>Price</th><th>Sum</th></tr>'; let total=0;
+  cart.forEach(c=>{const sum=c.price*c.qty; total+=sum; s+=`<tr><td>${c.name}</td><td>${c.qty}</td><td>$${c.price.toFixed(2)}</td><td>$${sum.toFixed(2)}</td></tr>`;});
+  s+=`<tr><th colspan="3" style="text-align:right;">Total</th><th>$${total.toFixed(2)}</th></tr>`; t.innerHTML=s;
+}
+render();
+document.getElementById('clr').onclick=()=>{localStorage.removeItem('cart');render();};
+document.getElementById('pay').onclick=async()=>{
+  const cart=JSON.parse(localStorage.getItem('cart')||'[]'); if(cart.length===0) return alert('Cart is empty');
+  const lineItems=cart.map(c=>({
+    price_data:{currency:'cad',product_data:{name:c.name},unit_amount:Math.round(c.price*100)},
+    quantity:c.qty
+  }));
+  const r=await fetch('/.netlify/functions/create-checkout',{method:'POST',body:JSON.stringify({lineItems,mode:'payment'})});
+  const data=await r.json(); if(data.url) location.href=data.url; else alert('Stripe not configured');
+};
+</script>
+</body></html>

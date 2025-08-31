@@ -1,0 +1,23 @@
+[
+  {
+    "id": "hr-maple-201",
+    "name": "H201 Flat handrail \u2014 Maple (8ft)",
+    "price": 64.0,
+    "unit": "pc",
+    "image": "/assets/materials/handrail_maple.svg"
+  },
+  {
+    "id": "tread-square-42",
+    "name": "Square edge treads 42\"\u00d710\"\u00d77/8\" \u2014 Maple",
+    "price": 40.0,
+    "unit": "pc",
+    "image": "/assets/materials/tread_square.svg"
+  },
+  {
+    "id": "nosing-maple",
+    "name": "Stair nosing \u2014 Maple 3/4\"",
+    "price": 0,
+    "unit": "pc",
+    "image": "/assets/materials/nosing_maple.svg"
+  }
+]

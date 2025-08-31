@@ -1,0 +1,67 @@
+
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Materials — AM Carpentry</title>
+<link rel="stylesheet" href="/css/style.css">
+</head><body>
+
+<header class="header">
+  <nav class="nav">
+    <a class="brand" href="/"><img src="/assets/img/brand.svg" alt="AM Carpentry logo"/></a>
+    <a class="menu" href="/materials.html">Materials</a>
+    <a class="menu" href="/gallery.html">Gallery</a>
+    <a class="menu" href="/calculator.html">Calculator</a>
+    <a class="menu" href="/deposits.html">Pay deposit</a>
+    <a class="menu" href="/contact.html">Contact</a>
+    <a class="menu" href="/account.html">Account</a>
+  </nav>
+</header>
+
+<div class="center" style="padding:16px;">
+  <h2>Materials</h2>
+  <p class="muted">Manage via admin or import CSV. Items with price 0 are marked TBD.</p>
+  <div id="list" class="grid"></div>
+  <hr class="sep">
+  <div style="display:flex; gap:12px; align-items:center;">
+    <a class="btn" href="/cart.html">Open cart</a>
+    <a class="btn ghost" href="/import.html">Import from CSV</a>
+    <a class="btn ghost" href="/admin/">Admin</a>
+  </div>
+</div>
+<script>
+async function load(){
+  const r=await fetch('/data/materials.json'); const items=await r.json();
+  const wrap=document.getElementById('list');
+  items.forEach(it=>{
+    const el=document.createElement('div'); el.className='card';
+    el.innerHTML=`<img src="${it.image}" alt=""><div class="p">
+      <strong>${it.name}</strong><br/><small class="muted">Unit: ${it.unit}</small><br/>
+      <div style="margin-top:8px;">${it.price>0?('$'+it.price.toFixed(2)):'<small class="muted">TBD</small>'}</div>
+      <div style="margin-top:10px;"><button class="btn" data-id="${it.id}" ${it.price>0?'':'disabled'}>Add to cart</button></div>
+    </div>`; wrap.appendChild(el);
+  });
+  wrap.addEventListener('click',e=>{
+    if(e.target.tagName==='BUTTON'){
+      const id=e.target.dataset.id;
+      const item=(items.find(x=>x.id===id)||{});
+      const cart=JSON.parse(localStorage.getItem('cart')||'[]');
+      const ex=cart.find(x=>x.id===id);
+      if(ex) ex.qty+=1; else cart.push({id:item.id,name:item.name,price:item.price,qty:1});
+      localStorage.setItem('cart', JSON.stringify(cart)); alert('Added to cart');
+    }
+  });
+} load();
+</script>
+
+<footer class="footer">
+  <div class="center">
+    <div>© <span id="y"></span> AM Carpentry — Stairs & Handrails (Toronto / GTA)</div>
+    <div style="margin-top:8px;">Instagram:
+      <a href="https://www.instagram.com/woodenstair.andriy?igsh=eDAwZjE3NnowZjkx" target="_blank" rel="noopener">woodenstair.andriy</a>
+    </div>
+    <div style="margin-top:8px;"><small class="muted">Founded in 2025, based on Canadian experience since 2022.</small></div>
+  </div>
+  <script>document.getElementById('y').textContent = new Date().getFullYear();</script>
+</footer>
+
+</body></html>

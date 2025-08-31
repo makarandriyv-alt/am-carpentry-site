@@ -1,0 +1,45 @@
+
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Gallery — AM Carpentry</title>
+<link rel="stylesheet" href="/css/style.css">
+</head><body>
+
+<header class="header">
+  <nav class="nav">
+    <a class="brand" href="/"><img src="/assets/img/brand.svg" alt="AM Carpentry logo"/></a>
+    <a class="menu" href="/materials.html">Materials</a>
+    <a class="menu" href="/gallery.html">Gallery</a>
+    <a class="menu" href="/calculator.html">Calculator</a>
+    <a class="menu" href="/deposits.html">Pay deposit</a>
+    <a class="menu" href="/contact.html">Contact</a>
+    <a class="menu" href="/account.html">Account</a>
+  </nav>
+</header>
+
+<div class="center" style="padding:16px;"><h2>Gallery (before / after)</h2></div>
+<div class="gallery"><a href="/assets/gallery/photo_01.svg" data-src="/assets/gallery/photo_01.svg"><img src="/assets/gallery/photo_01.svg" alt=""></a>
+<a href="/assets/gallery/photo_02.svg" data-src="/assets/gallery/photo_02.svg"><img src="/assets/gallery/photo_02.svg" alt=""></a>
+<a href="/assets/gallery/photo_03.svg" data-src="/assets/gallery/photo_03.svg"><img src="/assets/gallery/photo_03.svg" alt=""></a>
+<a href="/assets/gallery/photo_04.svg" data-src="/assets/gallery/photo_04.svg"><img src="/assets/gallery/photo_04.svg" alt=""></a>
+<a href="/assets/gallery/photo_05.svg" data-src="/assets/gallery/photo_05.svg"><img src="/assets/gallery/photo_05.svg" alt=""></a>
+<a href="/assets/gallery/photo_06.svg" data-src="/assets/gallery/photo_06.svg"><img src="/assets/gallery/photo_06.svg" alt=""></a></div>
+<div class="lightbox" id="lightbox"><img alt="preview"></div>
+<script>
+const lb=document.getElementById('lightbox'); const img=lb.querySelector('img');
+document.querySelectorAll('.gallery a').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();img.src=a.dataset.src;lb.classList.add('show');}));
+lb.addEventListener('click',()=>lb.classList.remove('show'));
+</script>
+
+<footer class="footer">
+  <div class="center">
+    <div>© <span id="y"></span> AM Carpentry — Stairs & Handrails (Toronto / GTA)</div>
+    <div style="margin-top:8px;">Instagram:
+      <a href="https://www.instagram.com/woodenstair.andriy?igsh=eDAwZjE3NnowZjkx" target="_blank" rel="noopener">woodenstair.andriy</a>
+    </div>
+    <div style="margin-top:8px;"><small class="muted">Founded in 2025, based on Canadian experience since 2022.</small></div>
+  </div>
+  <script>document.getElementById('y').textContent = new Date().getFullYear();</script>
+</footer>
+
+</body></html>

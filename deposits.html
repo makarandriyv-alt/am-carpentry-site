@@ -1,0 +1,21 @@
+
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pay a deposit — AM Carpentry</title>
+<link rel="stylesheet" href="/css/style.css">
+</head><body>
+<header class="header"><nav class="nav"><a class="brand" href="/">AM Carpentry</a></nav></header>
+<div class="center" style="max-width:600px; padding:16px;">
+  <h2>Pay a deposit</h2>
+  <label>Amount (CAD)</label><input id="amt" type="number" min="10" step="1" value="100"/>
+  <div style="margin-top:12px;"><button class="btn" id="go">Pay with Stripe</button></div>
+  <small class="muted">Testing card: 4242 4242 4242 4242</small>
+</div>
+<script>
+document.getElementById('go').onclick=async()=>{
+  const a=parseFloat(document.getElementById('amt').value||'0'); if(a<10) return alert('Min CAD 10');
+  const r=await fetch('/.netlify/functions/create-checkout',{method:'POST',body:JSON.stringify({amount:a})});
+  const data=await r.json(); if(data.url) location.href=data.url; else alert('Stripe not configured');
+};
+</script>
+</body></html>

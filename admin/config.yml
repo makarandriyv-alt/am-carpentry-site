@@ -1,0 +1,28 @@
+
+backend:
+  name: git-gateway
+  branch: main
+media_folder: "assets/uploads"
+public_folder: "/assets/uploads"
+collections:
+  - name: "materials"
+    label: "Materials"
+    folder: "content/materials"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Name", name: "name", widget: "string" }
+      - { label: "Price (CAD)", name: "price", widget: "number", value_type: "float", min: 0 }
+      - { label: "Unit", name: "unit", widget: "string", default: "pc" }
+      - { label: "Image", name: "image", widget: "image" }
+      - { label: "Description", name: "body", widget: "markdown", required: false }
+  - name: "gallery"
+    label: "Gallery"
+    folder: "content/gallery"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Before image", name: "before", widget: "image", required: false }
+      - { label: "After image", name: "after", widget: "image", required: false }
+      - { label: "Description", name: "body", widget: "markdown", required: false }
